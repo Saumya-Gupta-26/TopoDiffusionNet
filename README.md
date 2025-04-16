@@ -1,13 +1,10 @@
-# TopoDiffusionNet
+# TopoDiffusionNet (ICLR 2025)
 
 ## 0) Overview 
 
 This repository contains the implementation for our work "TopoDiffusionNet: A Topology-aware Diffusion Model", accepted to ICLR 2025. This is the first work to integrate topology with diffusion models. We propose a loss function $L_{topo}$ to force the diffusion model to generate topologically-faithful images.
 
 ![Overview](teaser.png?raw=true)
-
-Todo:
-- run this codebase
 
 ## 1) Relevant links
 - arXiv: https://arxiv.org/abs/2410.16646
@@ -44,7 +41,7 @@ To speed up training, we do the following in sequence:
 - To train ADM-T, load the checkpoint from ADM (uncond) and then continue training.
 - To train TDN, load the checkpoint from ADM-T and then continue training.
 
-### 2.4) Train commands (variations, analysis scripts)
+### 2.4) Train commands
 
 **2.4.1) ADM (unconditional).** You can load a pre-train model to fine-tune from (eg, I used [lsun_uncond_100M_2400K_bs64.pt](https://openaipublic.blob.core.windows.net/diffusion/march-2021/lsun_uncond_100M_2400K_bs64.pt))
 ```
