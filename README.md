@@ -13,8 +13,8 @@ This repository contains the implementation for our work "TopoDiffusionNet: A To
 ## 2) Code
 This work uses the [Ablated Diffusion Model (ADM)](https://proceedings.neurips.cc/paper_files/paper/2021/file/49ad23d1ec9fa4bd8d77d02681df5cfa-Paper.pdf) as the base diffusion model. Hence, the diffusion code is borrowed from https://github.com/openai/improved-diffusion . This code supports training and inference for 3 models: ADM, ADM-T, and TopoDiffusionNet (TDN). Each of these models generate binary images (masks), which can be later used as condition for [ControlNet](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhang_Adding_Conditional_Control_to_Text-to-Image_Diffusion_Models_ICCV_2023_paper.pdf).
 - ADM is an unconditional (uncond) model
-- ADM-T takes the topological constraint *c* as condition. In 0-dim, *c* denotes the number of objects, while in 1-dim, *c* denotes the number of holes. ADM-T is trained with the standard $L_{topo}$ loss function.
-- TDN is our proposed method which also takes the topological constraint *c* as condition. Additionally, during training, we impose a topology-based loss function $L_{topo}$ to ensure the model generates masks satusfying the constraint. We retain the standard $L_{simple}$ loss during training.
+- ADM-T takes the topological constraint *c* as condition. In 0-dim, *c* denotes the number of objects, while in 1-dim, *c* denotes the number of holes. ADM-T is trained with the standard $L_{simple}$ loss function.
+- TDN is our proposed method which also takes the topological constraint *c* as condition. Additionally, during training, we impose a topology-based loss function $L_{topo}$ to ensure the model generates masks satisfying the constraint. We retain the standard $L_{simple}$ loss during training.
 
 ### 2.1) Environment
 You would need to replicate the same environment as in https://github.com/openai/improved-diffusion . Please see their repo for more details. To compute $L_{topo}$, we would need homology-computation libraries. Hence, please run the following:
@@ -24,7 +24,7 @@ You would need to replicate the same environment as in https://github.com/openai
 
 ### 2.2) Datasets
 As mentioned in the paper, we conduct experiments on 4 datasets. For each dataset, we use only the masks (binary images) for training.
-- [0-dim] Synthetic shapes dataset: Curated by us. I used a simple python script to generate N random shapes (circle, traingle, rectangle) at any location in the image. If you have difficulty generating such a dataset, I can try releasing it.
+- [0-dim] Synthetic shapes dataset: Curated by us. I used a simple python script to generate N random shapes (circle, triangle, rectangle) at any location in the image. If you have difficulty generating such a dataset, I can try releasing it.
 - [0-dim] COCO: https://cocodataset.org/#home 
 - [1-dim] CREMI: https://cremi.org/data/
 - [1-dim] [ROADS](https://www.cs.toronto.edu/~vmnih/data/) or [Google Maps](https://openaccess.thecvf.com/content_cvpr_2017/papers/Isola_Image-To-Image_Translation_With_CVPR_2017_paper.pdf) -- Both are similar datasets
@@ -56,7 +56,7 @@ export OPENAI_LOGDIR="<fill>"
 CUDA_VISIBLE_DEVICES="<fill>" python image_train.py --data_dir <fill> $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
 
-**2.4.2) ADM-T.** Condition on topological constraint *c*. Best to load checkpoint from ADM (uncond) to resume training. You will have to set `load_strict = False` in train_util.py for checkpoint loading to be successful (since we're loading from an unconditional model to a conditional model). Additionally, I have modified the `class_cond` flag from the [original implementation](https://github.com/openai/improved-diffusion) which used nn.Embedding for N classes. My implementation uses a linear layer embedding, and so the number of classes doesn't not need to be specified. The topological constraint *c* can be any number.
+**2.4.2) ADM-T.** Condition on topological constraint *c*. Best to load checkpoint from ADM (uncond) to resume training. You will have to set `load_strict = False` in train_util.py for checkpoint loading to be successful (since we're loading from an unconditional model to a conditional model). Additionally, I have modified the `class_cond` flag from the [original implementation](https://github.com/openai/improved-diffusion) which used nn.Embedding for N classes. My implementation uses a linear layer embedding, and so the number of classes does not need to be specified. The topological constraint *c* can be any number.
 ```
 MODEL_FLAGS="--class_cond True --num_colors 3 --image_size 256 --num_channels 128 --num_res_blocks 2 --num_heads 1 --learn_sigma True --use_scale_shift_norm False --attention_resolutions 16"
 
@@ -69,7 +69,7 @@ export OPENAI_LOGDIR="<fill>"
 CUDA_VISIBLE_DEVICES="<fill>" python image_train.py --data_dir <fill> $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
 
-**2.4.3) TDN (Ours)**. Condition on topological constraint *c*, and using $L_{topo}$ during training. Best to load checkpoint from ADM-T to resume training. If you are enforcing 0-dim topologicial constraint (Shapes, COCO datasets), the argument in `TRAIN_FLAGS` is `--topo_dim 0`. For enforcing 1-dim topologicial constraint (CREMI, ROADS), the argument in `TRAIN_FLAGS` is `--topo_dim 1`.
+**2.4.3) TDN (Ours)**. Condition on topological constraint *c*, and using $L_{topo}$ during training. Best to load the checkpoint from ADM-T to resume training. If you are enforcing 0-dim topologicial constraint (Shapes, COCO datasets), the argument in `TRAIN_FLAGS` is `--topo_dim 0`. For enforcing 1-dim topological constraint (CREMI, ROADS), the argument in `TRAIN_FLAGS` is `--topo_dim 1`.
 ```
 MODEL_FLAGS="--class_cond True --num_colors 3 --image_size 256 --num_channels 128 --num_res_blocks 2 --num_heads 1 --learn_sigma True --use_scale_shift_norm False --attention_resolutions 16"
 
