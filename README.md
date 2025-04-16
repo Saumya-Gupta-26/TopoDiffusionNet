@@ -1,4 +1,4 @@
-# TopoDiffusionNet (ICLR 2025)
+# [ICLR 2025] TopoDiffusionNet: A Topology-aware Diffusion Model 
 
 ## 0) Overview 
 
