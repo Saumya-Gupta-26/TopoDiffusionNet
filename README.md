@@ -109,7 +109,10 @@ Scripts image_sample.py, extract-npz.py, eval-metrics.py etc have comments withi
 ### 2.6) Pre-trained weights
 To be added
 
-## 3) Citation
+## 3) Applications to Pathology
+This work has been extended to generate layouts for pathology image generation (accepted to CVPR 2025). Please check https://github.com/Melon-Xu/TopoCellGen for the paper and implementation.
+
+## 4) Citation
 If you found this work useful, please consider citing it as
 ```
 @article{gupta2025topodiffusionnet,
