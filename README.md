@@ -107,7 +107,7 @@ python3 analysis-scripts/eval-metrics.py # to obtain quantitative performance on
 Scripts image_sample.py, extract-npz.py, eval-metrics.py etc have comments within them to help understand what variables to set.
 
 ### 2.6) Pre-trained weights
-I have included best checkpoints for the shapes dataset in checkpoints/ folder
+To be added
 
 ## 3) Citation
 If you found this work useful, please consider citing it as
