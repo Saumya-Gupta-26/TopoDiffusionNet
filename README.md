@@ -2,7 +2,7 @@
 
 ## 0) Overview 
 
-This repository contains the implementation for our work "TopoDiffusionNet: A Topology-aware Diffusion Model", accepted to ICLR 2025. This is the first work to integrate topology with diffusion models. We propose a loss function $L_{topo}$ to force the diffusion model to generate topologically-faithful images.
+This repository contains the implementation for our work "TopoDiffusionNet: A Topology-aware Diffusion Model", accepted to ICLR 2025. **This is the first work to integrate topology with diffusion models.** We propose a loss function $L_{topo}$ to force the diffusion model to generate topologically-faithful images. Given a topological constraint *c*, our model generates images with *c* number of objects or *c* number of holes, depending on the desired topology (0-dim or 1-dim). Our diffusion model generates masks (binary images), which can be later used as condition for [ControlNet](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhang_Adding_Conditional_Control_to_Text-to-Image_Diffusion_Models_ICCV_2023_paper.pdf).
 
 ![Overview](teaser.png?raw=true)
 
