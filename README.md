@@ -6,6 +6,8 @@ This repository contains the implementation for our work "TopoDiffusionNet: A To
 
 ![Overview](teaser.png?raw=true)
 
+![Framework](framework.png?raw=true)
+
 ## 1) Relevant links
 - arXiv: https://arxiv.org/abs/2410.16646
 - openreview: https://openreview.net/forum?id=ZK1LoTo10R
